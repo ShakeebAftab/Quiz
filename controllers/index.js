@@ -1,4 +1,5 @@
 const AdminUserController = require("./admin/Admin_user_controller");
+const AdminTerminateController = require("./admin/Admin_terminate_controller");
 const Admin_order_controller = require("./admin/Admin_order_controller");
 const AdminQuizController = require("./admin/Admin_quiz_controller");
 const AdminQuestionController = require("./admin/Admin_question_controller");
@@ -31,4 +32,5 @@ module.exports = [
   MemberDashboard,
   PublicIndex,
   getProducts,
+  AdminTerminateController,
 ];
