@@ -1391,6 +1391,8 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
     $("#typeSelection").css("display", "block");
     currentActiveAnswerType = "typeSelection";
 
+    console.log("QUES", ques);
+
     ques.answers.forEach((val, index) => {
       if (val.answer) {
         $("#typeSelection .answerInner").append(`
@@ -1466,6 +1468,7 @@ async function storeAnswer(currentQuestion, currentActiveAnswerType) {
     return answerObject.question?.id == temp.question?.id;
   });
   console.log(answerExists);
+  // if (answerExists == -1) answerExists = 21;
   if (currentActiveAnswerType == "typeText") {
     ans = $("#" + currentActiveAnswerType + " input").val();
     if (saveResponseInto == "name") {
@@ -1714,7 +1717,7 @@ async function storeAnswer(currentQuestion, currentActiveAnswerType) {
       )
         .then((res) => res.json())
         .then(function (data) {
-          city_id = data[0].id;
+          city_id = data[0]?.id;
         });
     }
     try {
