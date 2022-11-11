@@ -65,6 +65,10 @@ let selectionQuestionTimeoutCounter = 6000;
 let closeResponseTimeoutCounter = 5000;
 let timeout;
 
+const checkAllergie = (opt) => {
+  return true;
+};
+
 const mainImage = $(".main-image-container img");
 fetch(url_preset + "/configurations")
   .then((res) => res.json())
@@ -1391,13 +1395,16 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
     $("#typeSelection").css("display", "block");
     currentActiveAnswerType = "typeSelection";
 
-    console.log("QUES", ques);
+    ques.answers.push({
+      answer: "None of the above",
+      answer_value: null,
+    });
 
     ques.answers.forEach((val, index) => {
       if (val.answer) {
         $("#typeSelection .answerInner").append(`
           <div class="selectionOptions">
-            <button data-val="${val.answer}" data-id="${val.id}" class="selectionBtns selectionBtn" >${val.answer}</button>
+            <button data-val="${val.answer}" data-id="${val.id}" class="selectionBtns selectionBtn" onclick="checkAllergie(${val.answer})">${val.answer}</button>
           </div>
         `);
       }
@@ -1464,11 +1471,11 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
 async function storeAnswer(currentQuestion, currentActiveAnswerType) {
   var temp = [];
   temp["question"] = currentQuestion;
+  console.log(temp.question.type == 7);
   let answerExists = dataToReturn.findIndex(function (answerObject) {
     return answerObject.question?.id == temp.question?.id;
   });
   console.log(answerExists);
-  // if (answerExists == -1) answerExists = 21;
   if (currentActiveAnswerType == "typeText") {
     ans = $("#" + currentActiveAnswerType + " input").val();
     if (saveResponseInto == "name") {
